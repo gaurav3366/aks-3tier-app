@@ -80,8 +80,8 @@ jobs:
 
     - name: Deploy to AKS
       run: |
-        helm upgrade --install ${env.RELEASE_NAME} ${{ env.HELM_PACKAGE }} \
-          --namespace ${env.RELEASE_NAME} \  # Use release name as namespace
+        helm upgrade --install ${{ env.RELEASE_NAME }} ${{ env.HELM_PACKAGE }} \
+          --namespace ${{ env.RELEASE_NAME }} \  # Use release name as namespace
           --set ingress.serviceIP=${{ env.EXTERNAL_IP }}
 
 
