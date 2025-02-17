@@ -58,7 +58,7 @@ database:
     tag: 13-alpine
     pullPolicy: IfNotPresent
   username: admin
-  password: your-secure-password  # Replace with secure password
+  password: test  # Replace with secure password
   database: itemsdb
   resources:
     limits:

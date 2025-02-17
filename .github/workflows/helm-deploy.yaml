@@ -60,9 +60,9 @@ jobs:
 
     - name: Package Helm Chart
       run: |
-        helm package ./helm
+        helm package ./helm/r3-tier-app
         echo "HELM_PACKAGE=$(ls three-tier-app-*.tgz)" >> $GITHUB_ENV
-        
+
 
     - name: Get Ingress IP
       run: |
