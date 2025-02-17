@@ -30,7 +30,7 @@ jobs:
         echo "FRONTEND_IMAGE_FULL_IDENTIFIER=${FRONTEND_IMAGE_FULL_IDENTIFIER}" >> $GITHUB_ENV
         
         # Build the frontend image
-        docker build -f ./application/frontend/Dockerfile -t $FRONTEND_IMAGE_FULL_IDENTIFIER ./frontend
+        docker build -f ./application/frontend/Dockerfile -t $FRONTEND_IMAGE_FULL_IDENTIFIER ./application/frontend
         
         # Push the frontend image
         docker push $FRONTEND_IMAGE_FULL_IDENTIFIER
@@ -41,7 +41,7 @@ jobs:
         echo "BACKEND_IMAGE_FULL_IDENTIFIER=${BACKEND_IMAGE_FULL_IDENTIFIER}" >> $GITHUB_ENV
         
         # Build the backend image
-        docker build -f ./application/backend/Dockerfile -t $BACKEND_IMAGE_FULL_IDENTIFIER ./backend
+        docker build -f ./application/backend/Dockerfile -t $BACKEND_IMAGE_FULL_IDENTIFIER ./application/backend
         
         # Push the backend image
         docker push $BACKEND_IMAGE_FULL_IDENTIFIER
