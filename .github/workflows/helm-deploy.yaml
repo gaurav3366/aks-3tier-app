@@ -69,7 +69,7 @@ jobs:
 
     - name: Package Helm Chart
       run: |
-        helm package ./helm/3-tier-app
+        helm package ./helm
         echo "HELM_PACKAGE=$(ls three-tier-app-*.tgz)" >> $GITHUB_ENV
 
 
@@ -87,7 +87,7 @@ jobs:
     - name: Deploy to AKS
       run: |
         echo "Deploying Helm chart..."
-        helm upgrade --install ${{ env.RELEASE_NAME }} /home/runner/work/aks-3tier-app/aks-3tier-app/three-tier-app-1.1.0.tgz \
+        helm upgrade --install ${{ env.RELEASE_NAME }} /home/runner/work/helm/helm/three-tier-app-1.1.0.tgz \
           --namespace ${{ env.RELEASE_NAME }} \
           --set ingress.serviceIP=${{ env.EXTERNAL_IP }}
 
