@@ -4,8 +4,8 @@ on:
     branches: feat/3-tier-app
 
 env:
-  AKS_CLUSTER_NAME: your-cluster
-  AKS_RESOURCE_GROUP: your-resource-group
+  AKS_CLUSTER_NAME: dev-aks
+  AKS_RESOURCE_GROUP: dev-gtest
   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
   DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
   FRONTEND_IMAGE_NAME: frontend
@@ -62,6 +62,7 @@ jobs:
       run: |
         helm package ./helm
         echo "HELM_PACKAGE=$(ls three-tier-app-*.tgz)" >> $GITHUB_ENV
+        
 
     - name: Get Ingress IP
       run: |
