@@ -22,11 +22,11 @@ jobs:
 
     - name: Build and push frontend image
       run: |
-        docker build -t ${{ env.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }} ./application/frontend
-        docker push ${{ env.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }}
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }} ./application/frontend
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }}
         # Also tag as latest
-        docker tag ${{ env.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }} ${{ env.DOCKER_HUB_USERNAME }}/frontend:latest
-        docker push ${{ env.DOCKER_HUB_USERNAME }}/frontend:latest
+        docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }} ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:latest
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:latest
 
     - name: Build and push backend image
       run: |
