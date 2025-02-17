@@ -13,7 +13,7 @@ spec:
       labels:
         app: database
     spec:
-      containers:x
+      containers:
       - name: database
         image: {{ .Values.database.image.repository }}:{{ .Values.database.image.tag }}
         ports:
