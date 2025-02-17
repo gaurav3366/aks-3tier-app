@@ -53,6 +53,9 @@ backend:
 # Database Configuration
 database:
   name: postgres
+  database:
+  username: admin
+  password: test 
   image:
     repository: postgres
     tag: 13-alpine
@@ -67,10 +70,6 @@ database:
     requests:
       cpu: 500m
       memory: 512Mi
-  persistence:
-    enabled: true
-    storageClass: "managed-premium"  # Azure managed disk storage class
-    size: 10Gi
   service:
     type: ClusterIP
     port: 5432
