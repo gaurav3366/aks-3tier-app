@@ -11,6 +11,7 @@ env:
   FRONTEND_IMAGE_NAME: frontend
   BACKEND_IMAGE_NAME: backend
   DOCKER_IMAGE_TAG: 1.0.0
+  RELEASE_NAME: three-tier-app
 
 jobs:
   build-and-deploy:
@@ -55,12 +56,16 @@ jobs:
       run: |
         az aks get-credentials --resource-group dev-gtest --name dev-aks --overwrite-existing
 
-    - name: Set AKS context
-      uses: azure/aks-set-context@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        resource-group: ${{ env.AKS_RESOURCE_GROUP }}
-        cluster-name: ${{ env.AKS_CLUSTER_NAME }}
+    # - name: Set AKS context
+    #   uses: azure/aks-set-context@v1
+    #   with:
+    #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+    #     resource-group: ${{ env.AKS_RESOURCE_GROUP }}
+    #     cluster-name: ${{ env.AKS_CLUSTER_NAME }}
+
+    - name: Ensure namespace exists with release name
+      run: |
+        kubectl create namespace ${{ env.RELEASE_NAME }} || echo "Namespace ${{ env.RELEASE_NAME }} already exists"  # Create namespace with release name
 
     - name: Package Helm Chart
       run: |
@@ -76,6 +81,7 @@ jobs:
     - name: Deploy to AKS
       run: |
         helm upgrade --install three-tier-app ${{ env.HELM_PACKAGE }} \
+          --namespace ${{ env.RELEASE_NAME }} \  # Use release name as namespace
           --set frontend.image.repository=${{ env.DOCKER_HUB_USERNAME }}/frontend \
           --set frontend.image.tag=${{ github.sha }} \
           --set backend.image.repository=${{ env.DOCKER_HUB_USERNAME }}/backend \
