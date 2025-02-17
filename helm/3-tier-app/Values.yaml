@@ -14,8 +14,8 @@ ingress:
 frontend:
   name: frontend
   image:
-    repository: your-acr.azurecr.io/frontend  # Replace with your ACR
-    tag: latest
+    repository: gauravrai3366/frontend
+    tag: 1.0.0
     pullPolicy: Always
   replicas: 2
   resources:
@@ -34,8 +34,8 @@ frontend:
 backend:
   name: backend
   image:
-    repository: your-acr.azurecr.io/backend  # Replace with your ACR
-    tag: latest
+    repository: gauravrai3366/backend  
+    tag: 1.0.0
     pullPolicy: Always
   replicas: 2
   resources:

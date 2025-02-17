@@ -86,8 +86,10 @@ jobs:
 
     - name: Deploy to AKS
       run: |
-        helm upgrade --install ${{ env.RELEASE_NAME }} ${{ env.HELM_PACKAGE }} \
-          --namespace ${{ env.RELEASE_NAME }} \  # Use release name as namespace
+        echo "Deploying Helm chart..."
+        helm upgrade --install ${{ env.RELEASE_NAME }} /home/runner/work/aks-3tier-app/aks-3tier-app/three-tier-app-0.1.0.tgz \
+          --namespace ${{ env.RELEASE_NAME }} \
           --set ingress.serviceIP=${{ env.EXTERNAL_IP }}
+
 
 
