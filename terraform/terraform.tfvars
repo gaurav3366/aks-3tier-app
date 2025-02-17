@@ -1,0 +1,10 @@
+rgname           = "dev-gtest"
+rglocation       = "UK South"
+name             = "tfvmex-aks"
+dns_prefix       = "tfvmex-dns"
+location         = "UK South"
+resource_group_name = "dev-gtest"
+node_count       = 2
+identity         = "SystemAssigned"
+vm_size          = "Standard_D2_v2"
+prefix = "dev"

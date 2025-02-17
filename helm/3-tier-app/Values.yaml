@@ -1,0 +1,90 @@
+nameOverride: ""
+fullnameOverride: ""
+
+# Ingress Configuration
+ingress:
+  enabled: true
+  serviceIP: "" # Will be set during deployment
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+
+# Frontend Configuration
+frontend:
+  name: frontend
+  image:
+    repository: your-acr.azurecr.io/frontend  # Replace with your ACR
+    tag: latest
+    pullPolicy: Always
+  replicas: 2
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 3000
+
+# Backend Configuration
+backend:
+  name: backend
+  image:
+    repository: your-acr.azurecr.io/backend  # Replace with your ACR
+    tag: latest
+    pullPolicy: Always
+  replicas: 2
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  service:
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+
+# Database Configuration
+database:
+  name: postgres
+  image:
+    repository: postgres
+    tag: 13-alpine
+    pullPolicy: IfNotPresent
+  username: admin
+  password: your-secure-password  # Replace with secure password
+  database: itemsdb
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  persistence:
+    enabled: true
+    storageClass: "managed-premium"  # Azure managed disk storage class
+    size: 10Gi
+  service:
+    type: ClusterIP
+    port: 5432
+    targetPort: 5432
+
+
+# Network Policies
+networkPolicy:
+  enabled: true
+
+# Autoscaling Configuration
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80

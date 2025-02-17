@@ -1,8 +1,8 @@
-resource "azurerm_kubernetes_cluster" "aks1" {
+resource "azurerm_kubernetes_cluster" "aks" {
   name                = "${var.prefix}-aks"
   location            = var.location
   resource_group_name = var.resource_group_name
-  dns_prefix          = "${var.prefix}-dns-aks"
+  dns_prefix          = var.dns_prefix
 
   default_node_pool {
     name       = "${var.prefix}np"
@@ -12,9 +12,5 @@ resource "azurerm_kubernetes_cluster" "aks1" {
 
   identity {
     type = var.identity
-  }
-
-  tags = {
-    Environment = var.tags_aks
   }
 }
