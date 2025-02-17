@@ -7,11 +7,6 @@ ingress:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/use-regex: "true"
 
-test: "hello"
-database:
-  username: "admin"
-  password: "test"
-
 # Frontend Configuration
 frontend:
   name: frontend
