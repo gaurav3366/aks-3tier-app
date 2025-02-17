@@ -6,7 +6,11 @@ on:
 env:
   AKS_CLUSTER_NAME: your-cluster
   AKS_RESOURCE_GROUP: your-resource-group
-  DOCKER_HUB_USERNAME: yourdockerhubusername  # Add your Docker Hub username
+  DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+  DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+  FRONTEND_IMAGE_NAME: frontend
+  BACKEND_IMAGE_NAME: backend
+  DOCKER_IMAGE_TAG: 1.0.0
 
 jobs:
   build-and-deploy:
@@ -20,21 +24,27 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-    - name: Build and push frontend image
+    - name: Build, tag, and push frontend image
       run: |
-        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }} ./application/frontend
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }}
-        # Also tag as latest
-        docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:${{ github.sha }} ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:latest
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:latest
+        FRONTEND_IMAGE_FULL_IDENTIFIER=${{ env.DOCKER_HUB_USERNAME }}/${{ env.FRONTEND_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+        echo "FRONTEND_IMAGE_FULL_IDENTIFIER=${FRONTEND_IMAGE_FULL_IDENTIFIER}" >> $GITHUB_ENV
+        
+        # Build the frontend image
+        docker build -f ./frontend/Dockerfile -t $FRONTEND_IMAGE_FULL_IDENTIFIER ./frontend
+        
+        # Push the frontend image
+        docker push $FRONTEND_IMAGE_FULL_IDENTIFIER
 
-    - name: Build and push backend image
+    - name: Build, tag, and push backend image
       run: |
-        docker build -t ${{ env.DOCKER_HUB_USERNAME }}/backend:${{ github.sha }} ./application/backend
-        docker push ${{ env.DOCKER_HUB_USERNAME }}/backend:${{ github.sha }}
-        # Also tag as latest
-        docker tag ${{ env.DOCKER_HUB_USERNAME }}/backend:${{ github.sha }} ${{ env.DOCKER_HUB_USERNAME }}/backend:latest
-        docker push ${{ env.DOCKER_HUB_USERNAME }}/backend:latest
+        BACKEND_IMAGE_FULL_IDENTIFIER=${{ env.DOCKER_HUB_USERNAME }}/${{ env.BACKEND_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+        echo "BACKEND_IMAGE_FULL_IDENTIFIER=${BACKEND_IMAGE_FULL_IDENTIFIER}" >> $GITHUB_ENV
+        
+        # Build the backend image
+        docker build -f ./backend/Dockerfile -t $BACKEND_IMAGE_FULL_IDENTIFIER ./backend
+        
+        # Push the backend image
+        docker push $BACKEND_IMAGE_FULL_IDENTIFIER
 
     - name: Azure Login
       uses: azure/login@v1
