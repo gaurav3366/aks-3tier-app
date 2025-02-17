@@ -13,7 +13,7 @@ spec:
       labels:
         app: database
     spec:
-      containers:
+      containers:x
       - name: database
         image: {{ .Values.database.image.repository }}:{{ .Values.database.image.tag }}
         ports:
@@ -36,3 +36,5 @@ spec:
       - name: database-storage
         persistentVolumeClaim:
           claimName: {{ .Release.Name }}-database-pvc
+
+
