@@ -2,7 +2,6 @@ name: Deploy to AKS
 on:
   push:
     branches: feat/3-tier-app
-    
 
 env:
   AKS_CLUSTER_NAME: dev-aks
