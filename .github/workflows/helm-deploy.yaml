@@ -10,7 +10,7 @@ env:
   DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
   FRONTEND_IMAGE_NAME: frontend
   BACKEND_IMAGE_NAME: backend
-  DOCKER_IMAGE_TAG: 1.0.0
+  DOCKER_IMAGE_TAG: 1.1.0
   RELEASE_NAME: three-tier-app
 
 
