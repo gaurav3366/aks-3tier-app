@@ -15,13 +15,13 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ .Release.Name }}-backend
+            name: {{ .Release.Name }}-frontend  
             port:
               number: 80
       - path: /api
         pathType: Prefix
         backend:
           service:
-            name: {{ .Release.Name }}-frontend
+            name: {{ .Release.Name }}-backend  
             port:
               number: 8080
