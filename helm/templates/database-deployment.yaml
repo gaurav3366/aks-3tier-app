@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+\apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-database
@@ -29,6 +29,8 @@ spec:
             secretKeyRef:
               name: {{ .Release.Name }}-db-secrets
               key: password
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
         volumeMounts:
         - name: database-storage
           mountPath: /var/lib/postgresql/data
@@ -36,5 +38,3 @@ spec:
       - name: database-storage
         persistentVolumeClaim:
           claimName: {{ .Release.Name }}-database-pvc
-
-
