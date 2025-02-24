@@ -73,17 +73,17 @@ jobs:
         echo "HELM_PACKAGE=$(ls three-tier-app-*.tgz)" >> $GITHUB_ENV
 
 
-    # - name: Get Ingress IP
-    #   run: |
-    #     EXTERNAL_IP=$(kubectl get service -n ingress-nginx ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-    #     echo "EXTERNAL_IP=$EXTERNAL_IP" >> $GITHUB_ENV
+    - name: Get Ingress IP
+      run: |
+        EXTERNAL_IP=$(kubectl get service -n ingress-nginx ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+        echo "EXTERNAL_IP=$EXTERNAL_IP" >> $GITHUB_ENV
 
     - name: Debug environment variables
       run: |
         echo "Release Name: ${{ env.RELEASE_NAME }}"
         echo "Helm Package: ${{ env.HELM_PACKAGE }}"
     
-    
+
 
     - name: Deploy to AKS
       run: |
