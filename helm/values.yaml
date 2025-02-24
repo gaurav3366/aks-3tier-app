@@ -8,7 +8,7 @@ frontend:
   name: frontend
   image:
     repository: gauravrai3366/frontend
-    tag: 1.0.0
+    tag: 1.1.0
     pullPolicy: Always
   replicas: 2
   resources:
@@ -28,7 +28,7 @@ backend:
   name: backend
   image:
     repository: gauravrai3366/backend  
-    tag: 1.0.0
+    tag: 1.1.0
     pullPolicy: Always
   replicas: 2
   resources:
