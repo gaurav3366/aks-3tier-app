@@ -33,7 +33,7 @@ function App() {
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" component="h1" gutterBottom>
-        Item Management System
+        Item Manage System
       </Typography>
       
       <div>
